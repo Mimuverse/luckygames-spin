@@ -1,10 +1,11 @@
 const results = ["💰 0.01 ETH", "😢 Leider nichts", "🎉 0.05 ETH", "⭐ 0.10 ETH"];
+
 document.getElementById("spinButton").addEventListener("click", () => {
   const wheel = document.getElementById("wheel");
-  wheel.style.animation = "spin 2s ease-out";
+  wheel.style.transform = "rotate(1440deg)";
   setTimeout(() => {
-    wheel.style.animation = "none";
     const result = results[Math.floor(Math.random() * results.length)];
-    document.getElementById("result").innerText = `Dein Gewinn: ${result}`;
+    document.getElementById("result").innerText = `Ergebnis: ${result}`;
+    wheel.style.transform = "rotate(0deg)";
   }, 2000);
 });
