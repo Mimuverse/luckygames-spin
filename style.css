@@ -1,0 +1,18 @@
+body {
+  font-family: sans-serif;
+  text-align: center;
+  background: #111;
+  color: #fff;
+}
+.container {
+  margin-top: 50px;
+}
+#wheel {
+  font-size: 100px;
+  margin: 20px 0;
+  animation: none;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(3600deg); }
+}
