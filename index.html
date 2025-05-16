@@ -7,35 +7,25 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
+  <div class="header">
     <h1>🎰 Lucky Spin Casino</h1>
+    <div class="promo-text" id="promoText"></div>
+  </div>
 
-    <div class="wallet-section">
-      <button id="connectWallet">🔗 Wallet verbinden</button>
-      <div id="walletAddress"></div>
-    </div>
+  <div class="container">
+    <button id="connectWallet">🔗 Wallet verbinden</button>
+    <div id="walletAddress"></div>
 
-    <div class="payment-section">
-      <button id="payButton">💸 0.01 ETH bezahlen</button>
-      <div id="paymentStatus"></div>
-    </div>
+    <button id="payButton">💸 0.01 ETH bezahlen</button>
+    <div id="paymentStatus"></div>
 
-    <div class="wheel-wrapper">
-      <div id="wheel" class="wheel">
-        <div class="slice">💰</div>
-        <div class="slice">😢</div>
-        <div class="slice">⭐</div>
-        <div class="slice">💥</div>
-        <div class="slice">🎉</div>
-        <div class="slice">💎</div>
-      </div>
+    <div class="wheel-container">
+      <canvas id="wheelCanvas" width="300" height="300"></canvas>
       <div class="marker">▼</div>
     </div>
 
-    <div class="action">
-      <button id="spinButton" disabled>🎯 Jetzt drehen</button>
-      <div id="result"></div>
-    </div>
+    <button id="spinButton" disabled>🎯 Jetzt drehen</button>
+    <div id="result"></div>
   </div>
 
   <script src="wallet.js"></script>

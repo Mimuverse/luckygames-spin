@@ -1,14 +1,83 @@
-const wheel = document.getElementById("wheel");
-const spinBtn = document.getElementById("spinButton");
-const resultDiv = document.getElementById("result");
+body {
+  margin: 0;
+  background: radial-gradient(#111, #000);
+  color: #ffd700;
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+}
 
-spinBtn.addEventListener("click", () => {
-  const deg = 3600 + Math.floor(Math.random() * 360);
-  wheel.style.transform = `rotate(${deg}deg)`;
+.header {
+  padding: 20px;
+  background: #1a1a1a;
+  border-bottom: 1px solid #444;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+}
 
-  setTimeout(() => {
-    const outcomes = ["💰 Gewinn", "😢 Niete", "⭐ 0.05 ETH", "💥 Jackpot", "🎉 Bonus", "💎 0.1 ETH"];
-    const outcome = outcomes[Math.floor(Math.random() * outcomes.length)];
-    resultDiv.innerText = `🎉 Ergebnis: ${outcome}`;
-  }, 3000);
-});
+h1 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.promo-text {
+  font-size: 16px;
+  margin-top: 10px;
+  color: #fff;
+  animation: fade 5s infinite alternate;
+}
+
+@keyframes fade {
+  0% { opacity: 0.2; }
+  100% { opacity: 1; }
+}
+
+.container {
+  max-width: 400px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #111;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
+}
+
+button {
+  background: #ffd700;
+  color: #000;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  margin: 10px 0;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:disabled {
+  background: #555;
+  color: #999;
+  cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+  background: #ffc107;
+}
+
+#walletAddress,
+#paymentStatus,
+#result {
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+.wheel-container {
+  position: relative;
+  margin: 30px auto;
+}
+
+.marker {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 32px;
+  color: red;
+}
