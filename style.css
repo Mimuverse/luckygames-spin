@@ -1,52 +1,14 @@
-body {
-  background: #0e0e0e;
-  color: #fff;
-  font-family: 'Segoe UI', sans-serif;
-  text-align: center;
-  margin: 0;
-  padding: 0;
-}
+const wheel = document.getElementById("wheel");
+const spinBtn = document.getElementById("spinButton");
+const resultDiv = document.getElementById("result");
 
-.container {
-  max-width: 400px;
-  margin: 50px auto;
-  padding: 20px;
-  background: #1c1c1c;
-  border-radius: 12px;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
-}
+spinBtn.addEventListener("click", () => {
+  const deg = 3600 + Math.floor(Math.random() * 360);
+  wheel.style.transform = `rotate(${deg}deg)`;
 
-h1 {
-  margin-bottom: 30px;
-  color: #ffd700;
-}
-
-.section, .wheel-section {
-  margin-bottom: 25px;
-}
-
-button {
-  background: #ffd700;
-  color: #000;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-}
-
-button:disabled {
-  background: #444;
-  cursor: not-allowed;
-}
-
-button:hover:not(:disabled) {
-  background: #ffb700;
-}
-
-#wheel {
-  font-size: 100px;
-  margin: 20px 0;
-  transition: transform 2s ease-out;
-}
+  setTimeout(() => {
+    const outcomes = ["💰 Gewinn", "😢 Niete", "⭐ 0.05 ETH", "💥 Jackpot", "🎉 Bonus", "💎 0.1 ETH"];
+    const outcome = outcomes[Math.floor(Math.random() * outcomes.length)];
+    resultDiv.innerText = `🎉 Ergebnis: ${outcome}`;
+  }, 3000);
+});
